@@ -14,6 +14,8 @@ namespace PayoutCalcApp
     {
         protected void Application_Start()
         {
+            DependencyResolver.SetResolver(new NinjectDependencyResolver());
+            IocContainer.RegisterBindings();
             //caching the dropdown for working hours
             Task.Factory.StartNew(HoursDropdownMapper.CacheHoursDropdown);
             AreaRegistration.RegisterAllAreas();

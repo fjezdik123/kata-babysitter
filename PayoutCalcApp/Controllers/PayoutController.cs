@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PayoutCalcApp.Infrastructure;
 using PayoutCalcApp.Models;
 
 namespace PayoutCalcApp.Controllers
@@ -14,11 +15,20 @@ namespace PayoutCalcApp.Controllers
         private const double StartToBedPay = 12.00; //$12 pay
         private const double BedToMidnightPay = 8;//$8 pay
         private const double MidnightToEndPay = 16; //$16 pay
+        private readonly ICacheService _cacheService;
+        const string ErrorMessage = "Dropdown was not populated, click on 'Return Back'";
+
+        public PayoutController(ICacheService cacheService)
+        {
+            _cacheService = cacheService;
+        }
 
         public ActionResult Index()
         {
-
-            return View();
+            var model = _cacheService?.GetCache("WorkingHoursModel");
+            if (model != null) return View((HoursViewModel)model);
+            HoursDropdownMapper.CacheHoursDropdown();
+            return RedirectToRoute($"~/Error/PageErrorFound/?msg={ErrorMessage}");
         }
 
         public ActionResult CalculatePayout(HoursViewModel hoursModel)

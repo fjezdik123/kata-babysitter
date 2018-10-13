@@ -30,7 +30,7 @@ namespace PayoutCalcApp.Infrastructure
             hoursViewModel.StartTimeHours = listOfHours;
             hoursViewModel.BedTimeHours = listOfHours;
             hoursViewModel.EndTimeHours = listOfHours;
-            CacheManager.SetCache(hoursViewModel,"WorkingHoursModel");
+            IocContainer.Resolve<ICacheService>().SetCache(hoursViewModel, "WorkingHoursModel");
         }
     }
 }

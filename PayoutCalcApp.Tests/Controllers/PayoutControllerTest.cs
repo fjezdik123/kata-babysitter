@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PayoutCalcApp;
 using PayoutCalcApp.Controllers;
+using PayoutCalcApp.Infrastructure;
 using PayoutCalcApp.Models;
 
 namespace PayoutCalcApp.Tests.Controllers
@@ -14,17 +16,45 @@ namespace PayoutCalcApp.Tests.Controllers
     [TestClass]
     public class PayoutControllerTest
     {
+        [TestInitialize]
+        public void Setup()
+        {
+            DependencyResolver.SetResolver(new NinjectDependencyResolver());
+            IocContainer.RegisterBindings();
+        }
+
 
         [TestMethod]
-        public void Index()
+        public void Index_GetRedirectToRouteResult_IfDropdownNotCached()
         {
             // Arrange
-            var controller = new PayoutController();
+            var controller = new PayoutController(null);
+            // Act
+            var result = controller.Index() as RedirectToRouteResult;
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual("~/Error/PageErrorFound/?msg=Dropdown was not populated, click on 'Return Back'",result.RouteName);
+        }
 
+        [TestMethod]
+        public void Index_GetView_IfDropdownIsCached()
+        {
+            var countofHoursInCachedDropdown = 13;
+            var defaultSelectedValue = -1;
+            // Arrange
+            HoursDropdownMapper.CacheHoursDropdown();
+            var cacheService = IocContainer.Resolve<ICacheService>();
+            var controller = new PayoutController(cacheService);
             // Act
             var result = controller.Index() as ViewResult;
-
             // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(countofHoursInCachedDropdown,((HoursViewModel)result.Model)?.StartTimeHours.Count());
+            Assert.AreEqual(countofHoursInCachedDropdown, ((HoursViewModel)result.Model)?.BedTimeHours.Count());
+            Assert.AreEqual(countofHoursInCachedDropdown, ((HoursViewModel)result.Model)?.EndTimeHours.Count());
+            Assert.AreEqual(defaultSelectedValue, ((HoursViewModel) result.Model)?.SelectedStartTimeHours);
+            Assert.AreEqual(defaultSelectedValue, ((HoursViewModel)result.Model)?.SelectedBedTimeHours);
+            Assert.AreEqual(defaultSelectedValue, ((HoursViewModel)result.Model)?.SelectedEndTimeHours);
             Assert.IsNotNull(result);
         }
 
@@ -32,7 +62,7 @@ namespace PayoutCalcApp.Tests.Controllers
         public void CalculatePayout_GetIndexView_IfHoursViewModelIsNull()
         {
             // Arrange
-            var controller = new PayoutController();
+            var controller = new PayoutController(null);
 
             // Act
             var result = controller.CalculatePayout(null) as ViewResult;
@@ -70,7 +100,7 @@ namespace PayoutCalcApp.Tests.Controllers
             //4AM    11
             #endregion
 
-            var controller = new PayoutController();
+            var controller = new PayoutController(null);
             var listOfHoursViewModels = new List<HoursViewModel> {
                 new HoursViewModel(),//HoursViewModel is null
                 new HoursViewModel{
@@ -124,7 +154,7 @@ namespace PayoutCalcApp.Tests.Controllers
         public void CalculatePayout_GetViewPayoutTotal_IfHoursViewModelIsValid()
         {
             // Arrange
-            var controller = new PayoutController();
+            var controller = new PayoutController(null);
             var listOfHoursViewModels = new List<Dictionary<HoursViewModel, double>>
             {
                 new Dictionary<HoursViewModel, double>

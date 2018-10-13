@@ -6,26 +6,32 @@ using System.Runtime.Caching;
 
 namespace PayoutCalcApp.Infrastructure
 {
-    public class CacheManager
+    public class CacheManager : ICacheService
     {
         private static readonly MemoryCache Cache = MemoryCache.Default;
 
         private static readonly CacheItemPolicy Policy =
-            new CacheItemPolicy {AbsoluteExpiration = DateTimeOffset.MaxValue};
+            new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.MaxValue };
 
-        public static void SetCache<T>(T itemToAdd, string key)
+        public void SetCache<T>(T itemToAdd, string key)
         {
-            Cache.Set(key,itemToAdd,Policy);
+            Cache.Set(key, itemToAdd, Policy);
         }
 
-        public static object GetCache(string key)
+        public object GetCache(string key)
         {
             return Cache.Get(key);
         }
 
-        public static void RemoveCache(string key)
+        public void RemoveCache(string key)
         {
             Cache.Remove(key);
         }
+    }
+    public interface ICacheService
+    {
+        void SetCache<T>(T itemToAdd, string key);
+        object GetCache(string key);
+        void RemoveCache(string key);
     }
 }
