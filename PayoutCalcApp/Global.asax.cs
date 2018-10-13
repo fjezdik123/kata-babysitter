@@ -17,5 +17,12 @@ namespace PayoutCalcApp
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            var lastError = Server.GetLastError();
+            Server.ClearError();
+            Response.Redirect($"~/Error/PageErrorFound/?msg={lastError.Message}");
+        }
     }
 }

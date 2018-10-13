@@ -6,10 +6,11 @@ using System.Web.Mvc;
 
 namespace PayoutCalcApp.Controllers
 {
-    public class HomeController : Controller
+    public class PayoutController : Controller
     {
         public ActionResult Index()
         {
+            
             return View();
         }
 
