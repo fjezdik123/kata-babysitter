@@ -1,1 +1,16 @@
-﻿
+﻿@using System.Globalization
+@model PayoutCalcApp.Models.HoursViewModel
+<div id="totalPayout">
+    @{
+        if (Model.TotalPayout != null)
+        {
+            @Html.Raw("</br>")
+            @Html.Raw("</br>")
+            <div class="row">
+                <div class="alert alert-danger col-md-4 col-md-offset-4" align="center">
+                   @Html.Raw("Total Shift Pay:") @Model.TotalPayout.GetValueOrDefault().ToString("C", CultureInfo.CurrentCulture)
+                </div>
+            </div>
+        }
+    }
+</div>

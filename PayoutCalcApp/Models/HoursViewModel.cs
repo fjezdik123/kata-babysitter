@@ -9,8 +9,11 @@ namespace PayoutCalcApp.Models
 {
     public class HoursViewModel
     {
+        [Display(Name="Start Time:")]
         public int SelectedStartTimeHours { get; set; } = -1;
+        [Display(Name = "Bed Time:")]
         public int SelectedBedTimeHours { get; set; } = -1;
+        [Display(Name = "End Time:")]
         public int SelectedEndTimeHours { get; set; } = -1;
         public double? TotalPayout { get; set; }
         public string ErrorMessage { get; set; }

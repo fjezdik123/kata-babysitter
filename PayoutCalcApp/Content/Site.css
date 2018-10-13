@@ -1,6 +1,12 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background: url('images/boy-sleeper.png') no-repeat center center fixed;
+    -webkit-background-size: 60%;
+    -moz-background-size: 60%;
+    -o-background-size: 60%;
+    -ms-background-size: 60%;
+    background-size: 60%;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -21,4 +27,7 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+.label-index {
+    padding-right: 25px;
 }
