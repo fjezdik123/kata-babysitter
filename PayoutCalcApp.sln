@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayoutCalcApp", "PayoutCalcApp\PayoutCalcApp.csproj", "{367C6AE8-4FA0-4EBD-875A-5C2267FCFA3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayoutCalcApp.Tests", "PayoutCalcApp.Tests\PayoutCalcApp.Tests.csproj", "{995A596F-16E7-442E-ACCE-525DC16B60EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{367C6AE8-4FA0-4EBD-875A-5C2267FCFA3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{367C6AE8-4FA0-4EBD-875A-5C2267FCFA3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{367C6AE8-4FA0-4EBD-875A-5C2267FCFA3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{367C6AE8-4FA0-4EBD-875A-5C2267FCFA3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{995A596F-16E7-442E-ACCE-525DC16B60EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{995A596F-16E7-442E-ACCE-525DC16B60EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{995A596F-16E7-442E-ACCE-525DC16B60EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{995A596F-16E7-442E-ACCE-525DC16B60EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {179AE613-9B6A-43FC-B6F0-875831FC24A6}
+	EndGlobalSection
+EndGlobal
