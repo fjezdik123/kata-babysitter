@@ -49,6 +49,8 @@ namespace PayoutCalcApp.Tests.Controllers
             // Arrange
 
             #region Prerequisites For Test
+            //start time can be the same as bed time
+            //end time must be > then start time and bed time, since we do not pay franctional pay, so babysitter must be paid at least 1 hour
             //gets paid $12/hour from start-time to bedtime
             //gets paid $8 / hour from bedtime to midnight
             //gets paid $16 / hour from midnight to end of job
@@ -70,11 +72,11 @@ namespace PayoutCalcApp.Tests.Controllers
 
             var controller = new PayoutController();
             var listOfHoursViewModels = new List<HoursViewModel> {
-                new HoursViewModel(),//null
+                new HoursViewModel(),//HoursViewModel is null
                 new HoursViewModel{
-                    SelectedStartTimeHours = 0,
-                    SelectedBedTimeHours = 0,
-                    SelectedEndTimeHours = 0
+                    SelectedStartTimeHours = 0,//5pm bedtime is also astart time
+                    SelectedBedTimeHours = 0,//5pm
+                    SelectedEndTimeHours = 0//5pm must be paid at least 1 hour
                                     },
                 new HoursViewModel{
                     // start time after bed time
@@ -125,6 +127,79 @@ namespace PayoutCalcApp.Tests.Controllers
             var controller = new PayoutController();
             var listOfHoursViewModels = new List<Dictionary<HoursViewModel, double>>
             {
+                new Dictionary<HoursViewModel, double>
+                {
+                    {
+                        new HoursViewModel
+                        {
+                            SelectedStartTimeHours = 7, //12am
+                            SelectedBedTimeHours = 7, //12am
+                            SelectedEndTimeHours = 11//4am 
+                        },
+                        64.00 //4*16 = 64
+                    }
+                },
+                new Dictionary<HoursViewModel, double>
+                {
+                    {
+                        new HoursViewModel
+                        {
+                            SelectedStartTimeHours = 7, //12am all hours over midnight
+                            SelectedBedTimeHours = 8, //1am
+                            SelectedEndTimeHours = 9//2am 
+                        },
+                        32.00 //2*16 = 32
+                    }
+                },
+                new Dictionary<HoursViewModel, double>
+                {
+                    {
+                        new HoursViewModel
+                        {
+                            SelectedStartTimeHours = 2, //7pm
+                            SelectedBedTimeHours = 2, //7pm
+                            SelectedEndTimeHours = 7//12am edge case
+                        },
+                        40.00 //Expected Result 5*8=40
+                    }
+                },
+                new Dictionary<HoursViewModel, double>
+                {
+                    {
+                        new HoursViewModel
+                        {
+                            SelectedStartTimeHours = 0, //5pm
+                            SelectedBedTimeHours = 0, //5pm
+                            SelectedEndTimeHours = 6 //11pm
+                        },
+                        48.00 //Expected Result (6*8)= 48
+                    }
+                },
+                new Dictionary<HoursViewModel, double>
+                {
+                    {
+                        new HoursViewModel
+                        {
+                            SelectedStartTimeHours = 0, //5pm edge case
+                            SelectedBedTimeHours = 7, //12am
+                            SelectedEndTimeHours = 11 //4am
+                        },
+                        148.00 //Expected Result (7*12)+(4*16) = 148
+                    }
+                },
+                new Dictionary<HoursViewModel, double>
+                {
+                    {
+                        new HoursViewModel
+                        {
+
+                            SelectedStartTimeHours = 0, //5pm
+                            SelectedBedTimeHours = 6, //11pm
+                            SelectedEndTimeHours = 10 //3am
+                        },
+                       128.00 //Expected Result (6*12)+(1*8)+(3*16)= 128
+                    }
+                },
                 new Dictionary<HoursViewModel, double>
                 {
                     {

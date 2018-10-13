@@ -83,14 +83,15 @@ namespace PayoutCalcApp.Controllers
         {            
             return  hoursModel != null &&
                     hoursModel.SelectedStartTimeHours != -1 && //-1 is default value for dropdown for 'Select Time'
-                    hoursModel.SelectedBedTimeHours != -1 &&
-                    hoursModel.SelectedEndTimeHours != -1 &&
+                    hoursModel.SelectedBedTimeHours != -1 && //-1 is default value for dropdown for 'Select Time'
+                    hoursModel.SelectedEndTimeHours != -1 && //-1 is default value for dropdown for 'Select Time'
                     hoursModel.SelectedStartTimeHours >= 0 &&//start time can start at 0, 5pm start
-                    hoursModel.SelectedBedTimeHours > 0 &&
-                    hoursModel.SelectedEndTimeHours > 0 &&
-                    hoursModel.SelectedStartTimeHours < hoursModel.SelectedBedTimeHours &&
-                    hoursModel.SelectedBedTimeHours < hoursModel.SelectedEndTimeHours &&
-                    hoursModel.SelectedStartTimeHours <= MaxWorkingHoursFromStart &&
+                    hoursModel.SelectedBedTimeHours >= 0 &&//bed time can start at 0, 5pm start
+                    hoursModel.SelectedEndTimeHours > 0 &&//end time can not start at 0, we do not pay fractional hours, assuming since i started i have to get paid at least for 1 hour
+                    hoursModel.SelectedStartTimeHours <= hoursModel.SelectedBedTimeHours && //bedtime can also begin at start time
+                    hoursModel.SelectedStartTimeHours < hoursModel.SelectedEndTimeHours && //start time must be less than end time ours
+                    hoursModel.SelectedBedTimeHours < hoursModel.SelectedEndTimeHours &&//must be paid at least 1 hour if I start
+                    hoursModel.SelectedStartTimeHours <= MaxWorkingHoursFromStart && //can not work more than 11 hours straight
                     hoursModel.SelectedBedTimeHours <= MaxWorkingHoursFromStart &&
                     hoursModel.SelectedEndTimeHours <= MaxWorkingHoursFromStart &&
                     ModelState.IsValid;
