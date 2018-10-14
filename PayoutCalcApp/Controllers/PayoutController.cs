@@ -82,14 +82,7 @@ namespace PayoutCalcApp.Controllers
             return startToBedPayTotal + bedToMidnightPayTotal;
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        internal bool IsModelValid(HoursViewModel hoursModel)
+       internal bool IsModelValid(HoursViewModel hoursModel)
         {            
             return  hoursModel != null &&
                     hoursModel.SelectedStartTimeHours != -1 && //-1 is default value for dropdown for 'Select Time'

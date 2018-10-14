@@ -8,32 +8,27 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-<div class="container body-content">
-    @RenderBody()       
-</div>
-@Scripts.Render("~/bundles/otf")
-@Scripts.Render("~/bundles/bootstrap")
-@RenderSection("scripts", required: false)
-<script type="text/javascript">
-    $("#SelectedBedTimeHours").on("change",
-        function () {
-            var v = $("#SelectedBedTimeHours").val();
-            var va2 = $("#SelectedStartTimeHours").val();
-            debugger;
-            return false;
-        });
-    function checkErrorMessage(model) {
-        debugger;
-        if (model.ErrorMessage != undefined) {
-            $("#errorMessage").html('<h5 class="text-danger">' + model.ErrorMessage + '</h5>');
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    @Scripts.Render("~/bundles/otf")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        function checkErrorMessage(model) {
+            if (model.ErrorMessage != undefined) {
+                displayErrorMessage(model.ErrorMessage);
+            }
         }
-    }
-
-    function resetErrorMessage() {
-        debugger;
-        $("#errorMessage").html("");
-    }
-</script>
+        function resetErrorMessage() {
+            $("#errorMessage").html("");
+        }
+        function displayErrorMessage(msg) {
+            $("#errorMessage").html('<div class="row"><div class="alert alert-danger col-md-4 col-md-offset-4" align="center">' +
+                msg +'</div></div>');
+        }
+    </script>
 </body>
 </html>
+
 
